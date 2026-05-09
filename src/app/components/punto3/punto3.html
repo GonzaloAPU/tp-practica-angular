@@ -1,0 +1,27 @@
+<p>punto3 works!</p>
+<div class="container mt-4" >
+  <div class="row g-3" >
+
+  <div class="col-md-3 text-center card body g-3 " *ngFor="let item of grilla" >
+    <button (click)="item.active = !item.active"  >
+      <h1 class="display-4" [hidden]="!item.active">{{ item.tipo }}</h1>
+      <!-- <p class="lead" >{{ item.descripcion }}</p> -->
+      <h1 class="display-4" [hidden]="item.active">oculto</h1>
+    </button>
+  </div>
+    <button (click)="mesclarGrilla()" class="btn btn-primary mt-3">
+      REINICIAR
+    </button>
+
+    <button (click)="mesclarGrilla()" class="btn btn-primary mt-3">
+      INICIAR
+    </button>
+
+    <button (click)="mesclarGrilla()" class="btn btn-primary mt-3">
+      INTENTAR
+    </button>
+
+
+  </div>
+
+</div>
