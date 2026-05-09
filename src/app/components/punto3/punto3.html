@@ -3,7 +3,7 @@
   <div class="row g-3" >
 
   <div class="col-md-3 text-center card body g-3 " *ngFor="let item of grilla" >
-    <button (click)="item.active = !item.active"  >
+    <button (click)="voltearTarjeta(item)"  >
       <h1 class="display-4" [hidden]="!item.active">{{ item.tipo }}</h1>
       <!-- <p class="lead" >{{ item.descripcion }}</p> -->
       <h1 class="display-4" [hidden]="item.active">oculto</h1>
@@ -13,13 +13,14 @@
       REINICIAR
     </button>
 
-    <button (click)="mesclarGrilla()" class="btn btn-primary mt-3">
+    <button (click)="iniciarJuego()" class="btn btn-primary mt-3">
       INICIAR
     </button>
 
     <button (click)="mesclarGrilla()" class="btn btn-primary mt-3">
       INTENTAR
     </button>
+    <p class="lead mt-3">Intentos: {{ intentos }}</p>
 
 
   </div>
