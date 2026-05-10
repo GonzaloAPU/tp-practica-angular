@@ -39,6 +39,8 @@ export class Punto3 {
       item.resuelta = false
       });
       this.tarjetasSeleccionadas = [];
+      this.intentos = 0;
+      this.juegoIniciado = false;
   }
 
   voltearTarjeta(item: any) {
@@ -61,6 +63,10 @@ export class Punto3 {
           this.tarjetasSeleccionadas[1].active = false;
           this.tarjetasSeleccionadas = [];
         }, 1000);
+        if(this.intentos === 0){
+          alert('Juego terminado. Has perdido.');
+          this.mesclarGrilla();
+        }
       }
     }
   }
