@@ -1,1 +1,25 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Practico 3 - Angular</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Parte 1
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item rounded-3 fw-semibold custom-hover" [routerLink]="['punto1']">Punto 1</a></li>
+            <li><a class="dropdown-item rounded-3 fw-semibold custom-hover" [routerLink]="['punto2']">Punto 2</a></li>
+            <li><a class="dropdown-item rounded-3 fw-semibold custom-hover" [routerLink]="['punto3']">Punto 3</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/parte2']">Parte 2</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -3,7 +3,7 @@
     <div class="col-md-8">
 
       <div class="card shadow">
-        <img [src]="'assets/' + eventos[indice].img"
+        <img [src]="'/assets/' + eventos[indice]?.img"
              class="card-img-top"
              [alt]="eventos[indice].nombre"
              style="height: 350px; object-fit: cover;">
@@ -13,7 +13,7 @@
           <p class="card-text text-muted">{{ eventos[indice].descripcion }}</p>
 
           <div class="d-flex justify-content-between align-items-center mt-4">
-            <button (click)="anterior()" class="btn btn-outline-primary btn-lg">
+            <button (click)="anterior()" class="btn btn-dark btn-lg">
               <i class="bi bi-arrow-left"></i> Anterior
             </button>
 
@@ -21,7 +21,7 @@
               <!--{{ indice + 1 }} / {{ eventos.length }}-->
             </span>
 
-            <button (click)="siguiente()" class="btn btn-outline-primary btn-lg">
+            <button (click)="siguiente()" class="btn btn-dark btn-lg">
               Siguiente <i class="bi bi-arrow-right"></i>
             </button>
           </div>

@@ -9,9 +9,9 @@ import { Component } from '@angular/core';
 
 export class Punto1 {
   eventos = [
-    { nombre: 'taller de yoga', descripcion: 'clases de relajacion y meditacion al aire libre', img: 'evento01.jpg' },
-    { nombre: 'workshop de programación', descripcion: 'clases de programación y desarrollo de software', img: 'evento02.jpg' },
-    { nombre: 'seminario de marketing', descripcion: 'clases de marketing y ventas', img: 'evento03.jpg' },
+    { nombre: 'taller de yoga', descripcion: 'clases de relajacion y meditacion al aire libre', img: 'img/yoga.jpg' },
+    { nombre: 'workshop de programación', descripcion: 'clases de programación y desarrollo de software', img: 'img/programacion.jpeg' },
+    { nombre: 'seminario de marketing', descripcion: 'clases de marketing y ventas', img: 'img/maketing.jpg' },
   ];
     indice = 0;
 

@@ -1,0 +1,8 @@
+.custom-btn{
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover{
+  transform: translateY(-2px);
+  opacity: 0.9;
+}

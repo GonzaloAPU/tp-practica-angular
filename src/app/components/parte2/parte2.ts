@@ -1,36 +1,47 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Inscripcion } from '../../services/inscripcion';
-import { Alumno,categoriaAlumno } from '../../models/alumno';
+import { Alumno, categoriaAlumno } from '../../models/alumno';
 
 @Component({
   selector: 'app-parte2',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './parte2.html',
   styleUrl: './parte2.css',
 })
 
 export class Parte2 {
 
-  inscripciones: Array<Alumno>;
+  inscripciones: Array<Alumno> = [];
+  categoriaAlumno = categoriaAlumno;
+  nuevoAlumno: Alumno = new Alumno('', 0, categoriaAlumno.Estudiante, '', '', '');
 
-  constructor(private inscripcionService: Inscripcion){
-    this.inscripciones=this.inscripcionService.getInscripciones();
-
+  constructor(private inscripcionService: Inscripcion) {
+    this.inscripciones = this.inscripcionService.getInscripciones();
   }
 
-  agregar(dni:string,precio:number,categoriaAlumno:categoriaAlumno,fechaIngreso:string,email:string,curso:string){
-    const nuevo = new Alumno(dni,precio,categoriaAlumno,fechaIngreso,email,curso);
+  agregar() {
+    const nuevo = new Alumno(
+      this.nuevoAlumno.dni,
+      this.nuevoAlumno.precio,
+      this.nuevoAlumno.categoriaAlumno,
+      this.nuevoAlumno.fechaIngreso || new Date().toISOString().slice(0, 10),
+      this.nuevoAlumno.email,
+      this.nuevoAlumno.curso
+    );
+
     this.inscripcionService.agregarInscripcion(nuevo);
-    this.inscripciones=this.inscripcionService.getInscripciones();
+    this.inscripciones = this.inscripcionService.getInscripciones();
+    this.nuevoAlumno = new Alumno('', 0, categoriaAlumno.Estudiante, '', '', '');
   }
 
-  eliminar(){
-    this.inscripcionService.eliminarInscripcion
-    this.inscripciones=this.inscripcionService.getInscripciones();
+  eliminar(dni: string) {
+    this.inscripcionService.eliminarInscripcion(dni);
+    this.inscripciones = this.inscripcionService.getInscripciones();
   }
 
-  traer(){
-    this.inscripcionService.getInscripciones
+  traer() {
+    this.inscripciones = this.inscripcionService.getInscripciones();
   }
-  
 }
