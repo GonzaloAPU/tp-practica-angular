@@ -1,30 +1,67 @@
-<div class="container">
-  <div class="row gap-3" >
+<div class="container py-5">
 
-    <div class="col text-center card body g-3" *ngFor="let producto of productos">
-      <h1 class="display-4">{{ producto.nombre }}</h1>
-      <p class="lead">{{ producto.descripcion }}</p>
-      <button (click)="agregarAlCarrito(producto)" class="btn btn-primary">Agregar al Carrito</button>
-    </div>
-
-  <button (click)="mostrar = !mostrar" class="btn btn-secondary mt-3">
-    <!--{{ mostrar ? 'Ocultar Carrito' : 'Mostrar Carrito' }}-->
-     mostrar
-  </button>
-  <div class="row gap-3 mt-5" [hidden]="!mostrar">
-    <div class="col text-center card body g-3" *ngFor="let item of carrito">
-      <h1 class="display-4">{{ item.nombre }}</h1>
-      <p class="lead">{{ item.descripcion }}</p>
-      <p class="lead">{{ item.precio }}</p>
-    </div>
-    <p>Total: {{ totalCarrito() }}</p>
-     <button (click)="mostrar = !mostrar" class="btn btn-secondary mt-3">
-    <!--{{ mostrar ? 'Ocultar Carrito' : 'Mostrar Carrito' }}-->
-     checkout
-  </button>
+  <!--Boton carrito-->
+  <div class="text-center mb-5">
+    <button (click)="mostrar = !mostrar" class="btn btn-dark btn-lg px-5 rounded-pill shadow">
+      {{ mostrar ? 'Ocultar Carrito' : 'Mostrar Carrito' }}
+    </button>
   </div>
 
+   <!--Productos-->
+   <div class="row g-4">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let producto of productos">
+      <div class="card h-100 shadow-sm border-0">
+
+        <img
+          [src]="'assets/' + producto.img"
+          class="card-img-top"
+          alt="{{ producto.nombre }}"
+          style="height: 220px; object-fit: cover;">
+
+        <div class="card-body d-flex flex-column text-center">
+
+          <h3 class="card-title fw-bold">{{ producto.nombre }}</h3>
+          <p class="card-text text-muted">{{ producto.descripcion }}</p>
+          <p class="fs-4 fw-bold text-primary">${{ producto.precio }}</p>
+
+          <button (click)="agregarAlCarrito(producto)" class="btn btn-primary btn-lg mt-auto rounded-pill fw-semibold">
+            Agregar al carrito
+          </button>
+
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!--Carrritto-->
 
+  <div class="row g-3 " [hidden]="!mostrar">
+    <h2 class="text-center mb-4 fw-bold">Carrito</h2>
+
+    <div class="row g-4 ">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let item of carrito">
+        <div class="card h-100 shadow-sm border-0">
+          <img
+            [src]="'assets/' + item.img"
+            class="card-img-top"
+            alt="{{ item.nombre }}"
+            style="height: 220px; object-fit: cover;">
+
+            <div class="card-body d-flex flex-column text-center">
+          <h3 class="card-title fw-bold">{{ item.nombre }}</h3>
+          <p class="lead">{{ item.descripcion }}</p>
+          <p class="lead">${{ item.precio }}</p>
+        </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+
+      <h3 class="fw-bold">Total: ${{ totalCarrito() }}</h3>
+      <button (click)="mostrar = !mostrar" class="btn btn-success btn-lg px-5 rounded-pill mt-3">
+          {{ mostrar ? 'Ocultar Carrito' : 'Mostrar Carrito' }}
+      </button>
+  </div>
 </div>
