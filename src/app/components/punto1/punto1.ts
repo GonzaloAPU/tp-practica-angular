@@ -17,7 +17,7 @@ export class Punto1 {
 
     siguiente() {
 
-      if (this.indice == this.eventos.length)  {
+      if (this.indice == this.eventos.length-1)  {
         this.indice = 0; // Reinicia el índice a 0 para mostrar el primer evento
       } else {
         this.indice++; // Incrementa el índice para mostrar el siguiente evento
@@ -26,7 +26,7 @@ export class Punto1 {
 
     anterior() {
 
-      if (this.indice == -1) {
+      if (this.indice == 0) {
         this.indice = this.eventos.length - 1; // Establece el índice al último evento
       } else {
         this.indice--; // Decrementa el índice para mostrar el evento anterior
