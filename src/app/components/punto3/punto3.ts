@@ -9,26 +9,28 @@ import { CommonModule } from '@angular/common';
 })
 export class Punto3 {
 
-  grilla = [{ img: 'jpg1', descripcion: 'descripcion1', tipo: 'barco', active: false, resuelta: false },
-  { img: 'jpg2', descripcion: 'descripcion2', tipo: 'avion', active: false, resuelta: false },
-  { img: 'jpg3', descripcion: 'descripcion3', tipo: 'auto', active: false, resuelta: false },
-  { img: 'jpg4', descripcion: 'descripcion4', tipo: 'barco', active: false, resuelta: false },
-  { img: 'jpg5', descripcion: 'descripcion5', tipo: 'avion', active: false, resuelta: false },
-  { img: 'jpg6', descripcion: 'descripcion6', tipo: 'auto', active: false, resuelta: false },
-  { img: 'jpg7', descripcion: 'descripcion7', tipo: 'gato', active: false, resuelta: false },
-  { img: 'jpg8', descripcion: 'descripcion8', tipo: 'perro', active: false, resuelta: false },
-  { img: 'jpg9', descripcion: 'descripcion9', tipo: 'raton', active: false, resuelta: false },
-  { img: 'jpg7', descripcion: 'descripcion7', tipo: 'gato', active: false, resuelta: false },
-  { img: 'jpg8', descripcion: 'descripcion8', tipo: 'perro', active: false, resuelta: false },
-  { img: 'jpg9', descripcion: 'descripcion9', tipo: 'raton', active: false, resuelta: false }]
+  grilla = [{ img: '../../../assets/img/barco.jpeg', descripcion: 'descripcion1', tipo: 'barco', active: false, resuelta: false },
+  { img: '../../../assets/img/avion.jpeg', descripcion: 'descripcion2', tipo: 'avion', active: false, resuelta: false },
+  { img: '../../../assets/img/auto.jpeg', descripcion: 'descripcion3', tipo: 'auto', active: false, resuelta: false },
+  { img: '../../../assets/img/barco.jpeg', descripcion: 'descripcion4', tipo: 'barco', active: false, resuelta: false },
+  { img: '../../../assets/img/avion.jpeg', descripcion: 'descripcion5', tipo: 'avion', active: false, resuelta: false },
+  { img: '../../../assets/img/auto.jpeg', descripcion: 'descripcion6', tipo: 'auto', active: false, resuelta: false },
+  { img: '../../../assets/img/gato.jpeg', descripcion: 'descripcion7', tipo: 'gato', active: false, resuelta: false },
+  { img: '../../../assets/img/perro.jpeg', descripcion: 'descripcion8', tipo: 'perro', active: false, resuelta: false },
+  { img: '../../../assets/img/raton.jpeg', descripcion: 'descripcion9', tipo: 'raton', active: false, resuelta: false },
+  { img: '../../../assets/img/gato.jpeg', descripcion: 'descripcion7', tipo: 'gato', active: false, resuelta: false },
+  { img: '../../../assets/img/perro.jpeg', descripcion: 'descripcion8', tipo: 'perro', active: false, resuelta: false },
+  { img: '../../../assets/img/raton.jpeg', descripcion: 'descripcion9', tipo: 'raton', active: false, resuelta: false }]
 
   tarjetasSeleccionadas: any[] = [];
   juegoIniciado: boolean = false;
   intentos: number = 0;
+  victoria: boolean = false;
+  tapa = '../../../assets/img/pregunta.jpg';
 
   iniciarJuego() {
     this.mesclarGrilla()
-    this.intentos = 3;
+    this.intentos = 5;
     this.juegoIniciado = true;
   }
 
@@ -41,11 +43,12 @@ export class Punto3 {
       this.tarjetasSeleccionadas = [];
       this.intentos = 0;
       this.juegoIniciado = false;
+      this.victoria = false;
   }
 
   voltearTarjeta(item: any) {
 
-    if (!this.juegoIniciado || item.active || item.resuelta || this.tarjetasSeleccionadas.length === 2) {
+    if (!this.juegoIniciado || item.active || item.resuelta || this.tarjetasSeleccionadas.length === 2 || this.victoria) {
       return;
     }
     item.active = true;
@@ -56,6 +59,7 @@ export class Punto3 {
         this.tarjetasSeleccionadas[0].resuelta = true;
         this.tarjetasSeleccionadas[1].resuelta = true;
         this.tarjetasSeleccionadas = [];
+        this.verificarVictoria();
       } else{
         this.intentos--;
         setTimeout(() => {
@@ -69,6 +73,12 @@ export class Punto3 {
         }
       }
     }
+
+
+    }
+
+    verificarVictoria(){
+      this.victoria = this.grilla.every(item => item.resuelta);
   }
 
 

@@ -1,14 +1,20 @@
 <p>punto3 works!</p>
-<div class="container mt-4" >
-  <div class="row g-3" >
+<div class="container mt-4">
+  <div class="row g-3">
 
-  <div class="col-md-3 text-center card body g-3 " *ngFor="let item of grilla" >
-    <button (click)="voltearTarjeta(item)"  >
-      <h1 class="display-4" [hidden]="!item.active">{{ item.tipo }}</h1>
-      <!-- <p class="lead" >{{ item.descripcion }}</p> -->
-      <h1 class="display-4" [hidden]="item.active">oculto</h1>
-    </button>
-  </div>
+    <div class="col-md-3 text-center card body g-3 " *ngFor="let item of grilla">
+      <button (click)="voltearTarjeta(item)">
+        <div [hidden]="!item.active">
+          <img [src]="item.img" [alt]="item.tipo" class="img-fluid" style="height: 100px; object-fit: cover;">
+        </div>
+        <!--<h1 class="display-4" [hidden]="!item.active">{{ item.img }}</h1>-->
+        <!-- <p class="lead" >{{ item.descripcion }}</p> -->
+        <!--<h1 class="display-4" [hidden]="item.active">oculto</h1>-->
+        <div [hidden]="item.active">
+          <img [src]="tapa" [alt]="item.tipo" class="img-fluid" style="height: 100px; object-fit: cover;">
+        </div>
+      </button>
+    </div>
     <button (click)="mesclarGrilla()" class="btn btn-primary mt-3">
       REINICIAR
     </button>
@@ -19,7 +25,18 @@
 
     <p class="lead mt-3">Intentos: {{ intentos }}</p>
 
+  </div>
 
+  <div *ngIf="victoria" class="alert alert-success text-center mt-3 animate__animated animate__bounceIn">
+    <h2 class="display-5">¡Felicidades! 🏆</h2>
+    <p>Has encontrado todas las parejas.</p>
+    <button (click)="mesclarGrilla()" class="btn btn-outline-success">Jugar de nuevo</button>
+  </div>
+
+  <div class="container mt-4">
+    <div class="row g-3" [style.opacity]="victoria ? '0.5' : '1'">
+      ...
+    </div>
   </div>
 
 </div>
