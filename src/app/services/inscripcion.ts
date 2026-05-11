@@ -31,8 +31,8 @@ export class Inscripcion {
 
   calcularDescuento(Alumno:Alumno):number{
     switch(Alumno.categoriaAlumno){
-      case 1: return Alumno.precio - (Alumno.precio * 0,35)
-      case 2: return Alumno.precio - (Alumno.precio * 0,50)
+      case 1: return Alumno.precio - (Alumno.precio * 0.35)
+      case 2: return Alumno.precio - (Alumno.precio * 0.50)
       case 3: return Alumno.precio
       default: return 0
     }
