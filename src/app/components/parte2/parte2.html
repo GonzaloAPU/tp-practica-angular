@@ -1,114 +1,111 @@
-<div class="container mt-4">
-  <div class="card p-4 mb-4 shadow-sm border-0 bg-light">
-    <h3 class="mb-4 text-primary">Proceso de Inscripción</h3>
+<section class="container mt-3">
+  <div class="row g-3">
+    <form>
+      <div class="col-md-12 mb-2">
+        <label class="form-label">DNI:</label>
+        <input type="text" name="Dni" [(ngModel)]="alumno.dni" class="form-control">
+      </div>
 
-    <div class="row g-3">
-      <div class="col-md-4">
-        <label class="fw-bold">DNI</label>
-        <input type="text" class="form-control" [(ngModel)]="nuevoAlumno.dni">
+      <div class="col-md-12 mb-2">
+        <label class="form-label">Precio:</label>
+        <input type="number" name="Precio" [(ngModel)]="alumno.precio" (ngModelChange)="ejecutarCalculo()" class="form-control">
       </div>
-      <div class="col-md-4">
-        <label class="fw-bold">Email</label>
-        <input type="email" class="form-control" [(ngModel)]="nuevoAlumno.email">
-      </div>
-      <div class="col-md-4">
-        <label class="fw-bold">Curso</label>
-        <input type="text" class="form-control" [(ngModel)]="nuevoAlumno.curso">
-      </div>
-      <div class="col-md-4">
-        <label class="fw-bold">Fecha de Inscripción</label>
-        <input type="date" class="form-control" [(ngModel)]="nuevoAlumno.fechaIngreso">
-      </div>
-      <div class="col-md-4">
-        <label class="fw-bold">Precio del Curso</label>
-        <input type="number" class="form-control" [(ngModel)]="nuevoAlumno.precio" (ngModelChange)="calcularDescuento()">
-      </div>
-      <div class="col-md-4">
-        <label class="fw-bold">Tipo de Alumno</label>
-        <select class="form-select" [(ngModel)]="nuevoAlumno.categoriaAlumno" (ngModelChange)="calcularDescuento()">
-          <option [ngValue]="1">Estudiante (35% Desc)</option>
-          <option [ngValue]="2">Egresado (50% Desc)</option>
-          <option [ngValue]="3">Particular (Sin Desc)</option>
+
+      <div class="col-md-12 mb-2">
+        <label class="form-label">Categoria Alumno:</label>
+        <select name="CategoriaAlumno" [(ngModel)]="alumno.categoriaAlumno" (ngModelChange)="ejecutarCalculo()" class="form-select">
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="estudiante">Estudiante</option>
+          <option value="egresado">Egresado</option>
+          <option value="particular">Particular</option>
         </select>
       </div>
 
-      <div class="col-12 mt-3" *ngIf="precioFinal !== null">
-        <div class="alert alert-info py-2 shadow-sm">
-          <strong>Precio Final Calculado: </strong> {{ precioFinal | currency:'ARS' }}
+      <div class="col-md-12 mb-2">
+        <label class="form-label">Fecha Inscripcion:</label>
+        <input type="date" name="FechaInscripcion" [(ngModel)]="alumno.fechaInscripcion" class="form-control">
+      </div>
+
+      <div class="col-md-12 mb-2">
+        <label class="form-label">Email:</label>
+        <input type="text" name="Email" [(ngModel)]="alumno.email" class="form-control">
+      </div>
+
+      <div class="col-md-12 mb-3">
+        <label class="form-label">Curso:</label>
+        <input type="text" name="Curso" [(ngModel)]="alumno.curso" class="form-control">
+      </div>
+
+      <div class="col-md-12 my-3 p-3 bg-light border rounded">
+        <div *ngIf="alumno.categoriaAlumno === 'estudiante'">
+          <label style="font-weight: bold; color: #2e7d32;">Total (Estudiante -35%): ${{ total | number:'1.2-2' }}</label>
+        </div>
+
+        <div *ngIf="alumno.categoriaAlumno === 'egresado'">
+          <label style="font-weight: bold; color: #2e7d32;">Total (Egresado -15%): ${{ total | number:'1.2-2' }}</label>
+        </div>
+
+        <div *ngIf="alumno.categoriaAlumno === 'particular'">
+          <label style="font-weight: bold;">Total: ${{ total | number:'1.2-2' }}</label>
         </div>
       </div>
 
-      <div class="col-12 text-end">
-        <button type="button" class="btn btn-primary px-5" (click)="agregar()" [disabled]="!nuevoAlumno.dni || precioFinal === null">
-          REGISTRAR
-        </button>
-      </div>
-    </div>
+      <button type="button" class="btn btn-primary w-100" (click)="agregarAlumno()">Agregar Alumno</button>
+    </form>
   </div>
+</section>
 
-  <div class="card p-4 mb-4 shadow-sm">
-    <h4 class="mb-3">Lista de Inscripciones</h4>
-    <div class="table-responsive">
-      <table class="table table-striped table-hover align-middle">
-        <thead class="table-dark">
-          <tr>
-            <th>Fecha</th>
-            <th>DNI</th>
-            <th>Curso</th>
-            <th>Categoría</th>
-            <th class="text-end">Precio Total</th>
-            <th class="text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let insc of inscripciones">
-            <td>{{ insc.fechaIngreso | date:'dd/MM/yyyy' }}</td>
-            <td>{{ insc.dni }}</td>
-            <td>{{ insc.curso }}</td>
-            <td>
-              <span [ngSwitch]="insc.categoriaAlumno">
-                <span *ngSwitchCase="1" class="badge bg-primary">Estudiante</span>
-                <span *ngSwitchCase="2" class="badge bg-success">Egresado</span>
-                <span *ngSwitchCase="3" class="badge bg-secondary">Particular</span>
-              </span>
-            </td>
-            <td class="text-end fw-bold">{{ insc.precio | currency:'ARS' }}</td>
-            <td class="text-center">
-             <!-- <button class="btn btn-outline-danger btn-sm" (click)="eliminar(insc.dni)">Eliminar</button> -->
-            </td>
-          </tr>
-          <tr *ngIf="inscripciones.length === 0">
-            <td colspan="6" class="text-center text-muted py-4">No hay inscripciones registradas.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<hr class="my-5">
 
-  <div class="row g-3">
-    <div class="col-md-3">
-      <div class="card text-center p-3 border-0 shadow-sm">
-        <p class="text-muted small fw-bold mb-1">ESTUDIANTES</p>
-        <h3 class="text-primary m-0">{{ contarPorCategoria(1) }}</h3>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card text-center p-3 border-0 shadow-sm">
-        <p class="text-muted small fw-bold mb-1">EGRESADOS</p>
-        <h3 class="text-success m-0">{{ contarPorCategoria(2) }}</h3>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card text-center p-3 border-0 shadow-sm">
-        <p class="text-muted small fw-bold mb-1">PARTICULARES</p>
-        <h3 class="text-secondary m-0">{{ contarPorCategoria(3) }}</h3>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card text-center p-3 border-0 shadow-sm bg-dark text-white">
-        <p class="text-light small fw-bold mb-1">TOTAL RECAUDADO</p>
-        <h3 class="m-0">{{ totalRecaudado | currency:'ARS' }}</h3>
-      </div>
-    </div>
-  </div>
-</div>
+<section class="container mt-4 mb-5">
+
+  <mat-form-field class="w-100">
+    <mat-label>🔍 Buscar alumno (DNI, Curso, Categoría, Email...)</mat-label>
+    <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. 39123456 o Java" #input>
+  </mat-form-field>
+
+  <h2 class="mt-3">Alumnos Inscritos</h2>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 mt-2">
+
+    <ng-container matColumnDef="dni">
+      <th mat-header-cell *matHeaderCellDef> DNI </th>
+      <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef> Precio Final </th>
+      <td mat-cell *matCellDef="let element"> ${{element.precio | number:'1.2-2'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoriaAlumno">
+      <th mat-header-cell *matHeaderCellDef> Categoría Alumno </th>
+      <td mat-cell *matCellDef="let element" style="text-transform: capitalize;"> {{element.categoriaAlumno}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaInscripcion">
+      <th mat-header-cell *matHeaderCellDef> Fecha Inscripción </th>
+      <td mat-cell *matCellDef="let element"> {{element.fechaInscripcion | date:'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="curso">
+      <th mat-header-cell *matHeaderCellDef> Curso </th>
+      <td mat-cell *matCellDef="let element"> {{element.curso}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnasIds"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnasIds;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell p-3" colspan="6">No se encontraron inscripciones que coincidan con: "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar página de alumnos" class="mat-elevation-z8"></mat-paginator>
+
+</section>
