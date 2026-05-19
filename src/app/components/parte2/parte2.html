@@ -1,39 +1,114 @@
 <section class="container mt-3">
   <div class="row g-3">
-    <form>
+    <form #formAlumno="ngForm">
+
       <div class="col-md-12 mb-2">
-        <label class="form-label">DNI:</label>
-        <input type="text" name="Dni" [(ngModel)]="alumno.dni" class="form-control">
+        <label class="form-label fw-bold">DNI:</label>
+        <input
+          type="text"
+          name="Dni"
+          [(ngModel)]="alumno.dni"
+          class="form-control"
+          required
+          pattern="[0-9]{7,8}"
+          #dniCtrl="ngModel"
+          [ngClass]="{'is-invalid': dniCtrl.invalid && (dniCtrl.dirty || dniCtrl.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="dniCtrl.invalid && (dniCtrl.dirty || dniCtrl.touched)">
+          <span *ngIf="dniCtrl.errors?.['required']">⚠️ El DNI es obligatorio.</span>
+          <span *ngIf="dniCtrl.errors?.['pattern']">⚠️ Debe ser un número válido de 7 u 8 dígitos (sin puntos).</span>
+        </div>
       </div>
 
       <div class="col-md-12 mb-2">
-        <label class="form-label">Precio:</label>
-        <input type="number" name="Precio" [(ngModel)]="alumno.precio" (ngModelChange)="ejecutarCalculo()" class="form-control">
+        <label class="form-label fw-bold">Precio:</label>
+        <input
+          type="number"
+          name="Precio"
+          [(ngModel)]="alumno.precio"
+          (ngModelChange)="ejecutarCalculo()"
+          class="form-control"
+          required
+          min="1"
+          #precioCtrl="ngModel"
+          [ngClass]="{'is-invalid': precioCtrl.invalid && (precioCtrl.dirty || precioCtrl.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="precioCtrl.invalid && (precioCtrl.dirty || precioCtrl.touched)">
+          <span *ngIf="precioCtrl.errors?.['required']">⚠️ El precio es obligatorio.</span>
+          <span *ngIf="precioCtrl.errors?.['min']">⚠️ El precio debe ser mayor a 0.</span>
+        </div>
       </div>
 
       <div class="col-md-12 mb-2">
-        <label class="form-label">Categoria Alumno:</label>
-        <select name="CategoriaAlumno" [(ngModel)]="alumno.categoriaAlumno" (ngModelChange)="ejecutarCalculo()" class="form-select">
+        <label class="form-label fw-bold">Categoria Alumno:</label>
+        <select
+          name="CategoriaAlumno"
+          [(ngModel)]="alumno.categoriaAlumno"
+          (ngModelChange)="ejecutarCalculo()"
+          class="form-select"
+          required
+          #categoriaCtrl="ngModel"
+          [ngClass]="{'is-invalid': categoriaCtrl.invalid && (categoriaCtrl.dirty || categoriaCtrl.touched)}"
+        >
           <option value="" disabled selected>Seleccione una opción</option>
           <option value="estudiante">Estudiante</option>
           <option value="egresado">Egresado</option>
           <option value="particular">Particular</option>
         </select>
+        <div class="invalid-feedback" *ngIf="categoriaCtrl.invalid && (categoriaCtrl.dirty || categoriaCtrl.touched)">
+          ⚠️ Debe seleccionar una categoría de alumno.
+        </div>
       </div>
 
       <div class="col-md-12 mb-2">
-        <label class="form-label">Fecha Inscripcion:</label>
-        <input type="date" name="FechaInscripcion" [(ngModel)]="alumno.fechaInscripcion" class="form-control">
+        <label class="form-label fw-bold">Fecha Inscripcion:</label>
+        <input
+          type="date"
+          name="FechaInscripcion"
+          [(ngModel)]="alumno.fechaInscripcion"
+          class="form-control"
+          required
+          #fechaCtrl="ngModel"
+          [ngClass]="{'is-invalid': fechaCtrl.invalid && (fechaCtrl.dirty || fechaCtrl.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="fechaCtrl.invalid && (fechaCtrl.dirty || fechaCtrl.touched)">
+          ⚠️ La fecha de inscripción es obligatoria.
+        </div>
       </div>
 
       <div class="col-md-12 mb-2">
-        <label class="form-label">Email:</label>
-        <input type="text" name="Email" [(ngModel)]="alumno.email" class="form-control">
+        <label class="form-label fw-bold">Email:</label>
+        <input
+          type="email"
+          name="Email"
+          [(ngModel)]="alumno.email"
+          class="form-control"
+          required
+          email
+          #emailCtrl="ngModel"
+          [ngClass]="{'is-invalid': emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)}"
+          placeholder="ejemplo@correo.com"
+        >
+        <div class="invalid-feedback" *ngIf="emailCtrl.invalid && (emailCtrl.dirty || emailCtrl.touched)">
+          <span *ngIf="emailCtrl.errors?.['required']">⚠️ El correo electrónico es obligatorio.</span>
+          <span *ngIf="emailCtrl.errors?.['email']">⚠️ El formato no es válido (ej. falta el '@' o el dominio).</span>
+        </div>
       </div>
 
       <div class="col-md-12 mb-3">
-        <label class="form-label">Curso:</label>
-        <input type="text" name="Curso" [(ngModel)]="alumno.curso" class="form-control">
+        <label class="form-label fw-bold">Curso:</label>
+        <input
+          type="text"
+          name="Curso"
+          [(ngModel)]="alumno.curso"
+          class="form-control"
+          required
+          #cursoCtrl="ngModel"
+          [ngClass]="{'is-invalid': cursoCtrl.invalid && (cursoCtrl.dirty || cursoCtrl.touched)}"
+        >
+        <div class="invalid-feedback" *ngIf="cursoCtrl.invalid && (cursoCtrl.dirty || cursoCtrl.touched)">
+          ⚠️ El nombre del curso es obligatorio.
+        </div>
       </div>
 
       <div class="col-md-12 my-3 p-3 bg-light border rounded">
@@ -50,7 +125,14 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary w-100" (click)="agregarAlumno()">Agregar Alumno</button>
+      <button
+        type="button"
+        class="btn btn-primary w-100 fw-bold"
+        (click)="agregarAlumno()"
+        [disabled]="formAlumno.invalid"
+      >
+        ➕ Agregar Alumno
+      </button>
     </form>
   </div>
 </section>
@@ -58,7 +140,6 @@
 <hr class="my-5">
 
 <section class="container mt-4 mb-5">
-
   <mat-form-field class="w-100">
     <mat-label>🔍 Buscar alumno (DNI, Curso, Categoría, Email...)</mat-label>
     <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. 39123456 o Java" #input>
@@ -67,7 +148,6 @@
   <h2 class="mt-3">Alumnos Inscritos</h2>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 mt-2">
-
     <ng-container matColumnDef="dni">
       <th mat-header-cell *matHeaderCellDef> DNI </th>
       <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
@@ -107,5 +187,4 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar página de alumnos" class="mat-elevation-z8"></mat-paginator>
-
 </section>
