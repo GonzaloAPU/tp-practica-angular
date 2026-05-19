@@ -11,6 +11,8 @@ export class Crud {
 
   constructor() {}
 
+
+
   agregarAlumno(alumno: Alumnos) {
     this.alumnos.push(alumno);
   }
@@ -39,5 +41,28 @@ export class Crud {
 
   mostrarAlumnos(): Alumnos[] {
     return this.alumnos;
+  }
+
+
+
+  calcularporcategoria() {
+    let egresados = 0;
+    let estudiantes = 0;
+    let particulares = 0;
+
+    this.alumnos.forEach(alumno => {
+      switch (alumno.categoriaAlumno) {
+        case 'egresado':
+          egresados++;
+          break;
+        case 'estudiante':
+          estudiantes++;
+          break;
+        case 'particular':
+          particulares++;
+          break;
+      }
+    });
+    return { totalEgresados: egresados, totalEstudiantes: estudiantes, totalParticulares: particulares };
   }
 }

@@ -26,6 +26,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class Parte2 {
  alumno: Alumnos;
   total: number = 0;
+  resumenCategorias = { totalEgresados: 0, totalEstudiantes: 0, totalParticulares: 0, };
 
   // 1. Columnas de Angular Material
   columnasIds: string[] = ['dni', 'precio', 'categoriaAlumno', 'fechaInscripcion', 'email', 'curso'];
@@ -48,6 +49,14 @@ export class Parte2 {
   // Sincroniza los datos del servicio con la tabla de Material
   actualizarTablaMaterial() {
     this.dataSource.data = this.crud.mostrarAlumnos();
+    const resultado = this.crud.calcularporcategoria();
+
+  this.resumenCategorias = {
+    totalEgresados: resultado.totalEgresados,
+    totalEstudiantes: resultado.totalEstudiantes,
+    totalParticulares: resultado.totalParticulares,
+
+  };
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
     });
@@ -85,9 +94,22 @@ export class Parte2 {
     this.actualizarTablaMaterial(); // Refresca por si borrás
   }
 
+  modificarAlumno(dni: string) {
+    // Aquí podrías abrir un modal o algo para editar, pero por simplicidad vamos a modificar directo
+    const alumnoModificado = new Alumnos(dni, 100, 'estudiante', new Date(), 'modificado@example.com', 'Curso Modificado');
+    this.crud.modificarAlumno(dni, alumnoModificado);
+    this.actualizarTablaMaterial();
+  }
+
   // Mantenemos tu función por si la llama el HTML viejo
   calcularTotal(alumno: Alumnos): number {
     this.total = this.crud.calcularTotal(alumno);
     return this.total;
   }
+
+  calcularporcategoria() {
+    return this.crud.calcularporcategoria();
+  }
+
+
 }

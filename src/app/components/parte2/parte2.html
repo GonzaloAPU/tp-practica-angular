@@ -11,6 +11,7 @@
           class="form-control"
           required
           pattern="[0-9]{7,8}"
+          id="dni"
           #dniCtrl="ngModel"
           [ngClass]="{'is-invalid': dniCtrl.invalid && (dniCtrl.dirty || dniCtrl.touched)}"
         >
@@ -185,6 +186,13 @@
       <td class="mat-cell p-3" colspan="6">No se encontraron inscripciones que coincidan con: "{{input.value}}"</td>
     </tr>
   </table>
+
+  <div class="mt-3">
+    <h3>Resumen por Categoría</h3>
+    <p><strong>Egresados:</strong> {{ calcularporcategoria().totalEgresados }}</p>
+    <p><strong>Estudiantes:</strong> {{ calcularporcategoria().totalEstudiantes }}</p>
+    <p><strong>Particulares:</strong> {{ calcularporcategoria().totalParticulares }}</p>
+  </div>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccionar página de alumnos" class="mat-elevation-z8"></mat-paginator>
 </section>
